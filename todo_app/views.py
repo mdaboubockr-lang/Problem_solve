@@ -19,11 +19,12 @@ class task_list_view(LoginRequiredMixin, ListView):
 
         user = self.request.user
         serach_param = self.request.GET.get('search-param', None)
+        print(serach_param)
         task_list = Task.objects.filter(user=user)
 
         task_list = task_list.filter(
             Q(task_sumary__icontains=serach_param)|
-            Q(task_detail__icontains=serach_param)|
+            Q(task_deatil__icontains=serach_param)|
             Q(task_status__icontains=serach_param)|
             Q(id=int(serach_param)) if serach_param and serach_param.isdigit() else Q()
         )

@@ -74,7 +74,7 @@
             margin-bottom: 20px;
         }
 
-        .container_btn_in{
+        .container_btn_in form{
             justify-content: space-between;
             display: flex;
             margin-bottom: 20px;
@@ -95,11 +95,16 @@
     <h1>Todo List</h1>
     <div class="container-button">
         <a href="/create_view/"><button class="all_button">Create Task</button></a>
-        <a href=""><button>Logout</button></a>
+        <form method="post" action="/logout/">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
     </div>
     <div class="container_btn_in">
-        <input type="text" name="search_param">
-        <button>Search</button>
+        <form method="get">
+            <input type="text" name='serach-param'>
+            <button>Search</button>
+        </form>
     </div>
     <table>
         <tr>

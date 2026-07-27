@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path,include
 from todo_app.views import task_list_view, task_create_view, task_update_view, task_deleate_view
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetDoneView
+from user_creation.views import UserCreation
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,5 +13,8 @@ urlpatterns = [
     path('delete_view/<int:pk>/', view=task_deleate_view.as_view(), name='delete'),
     path('__debug__/', include('debug_toolbar.urls')),
     path('login/', view=LoginView.as_view(), name='login'),
-    path('logout/', view=LogoutView.as_view(), name='logout')
+    path('logout/', view=LogoutView.as_view(), name='logout'),
+    path('registration/', view=UserCreation.as_view(), name='register'),
+    path('password_reset/', view=PasswordChangeView.as_view(), name='password_reset'),
+    path('password_change_done/', view=PasswordResetDoneView.as_view(), name='password_change_done')
 ]

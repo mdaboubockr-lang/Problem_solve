@@ -13,8 +13,10 @@ from django.db.models import Q
 class task_list_view(LoginRequiredMixin, ListView):
     model = Task
     template_name = "Task_list.html"
+    context_object_name = "all_list"
 
     def get_context_data(self, **kwargs):
+
         user = self.request.user
         serach_param = self.request.GET.get('search-param', None)
         task_list = Task.objects.filter(user=user)
@@ -24,7 +26,6 @@ class task_list_view(LoginRequiredMixin, ListView):
             Q(task_detail__icontains=serach_param)|
             Q(task_status__icontains=serach_param)|
             Q(id=int(serach_param)) if serach_param and serach_param.isdigit() else Q()
-            
         )
 
         context = super().get_context_data(**kwargs)

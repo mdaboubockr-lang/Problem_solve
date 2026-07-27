@@ -15,23 +15,26 @@ class task_list_view(LoginRequiredMixin, ListView):
     template_name = "Task_list.html"
     context_object_name = "all_list"
 
-    def get_context_data(self, **kwargs):
-
+    def get_queryset(self):
         user = self.request.user
-        serach_param = self.request.GET.get('search-param', None)
-        print(serach_param)
-        task_list = Task.objects.filter(user=user)
+        search_param = self.request.GET.get("search-param", "").strip()
 
-        task_list = task_list.filter(
-            Q(task_sumary__icontains=serach_param)|
-            Q(task_deatil__icontains=serach_param)|
-            Q(task_status__icontains=serach_param)|
-            Q(id=int(serach_param)) if serach_param and serach_param.isdigit() else Q()
-        )
+        queryset = Task.objects.filter(user=user)
 
-        context = super().get_context_data(**kwargs)
-        context["task_list"] = task_list
-        return context
+        if search_param:
+            queryset = queryset.filter(
+                Q(task_sumary__icontains=search_param) |
+                Q(task_deatil__icontains=search_param) |
+                Q(task_status__icontains=search_param)
+            )
+
+            if search_param.isdigit():
+                queryset = queryset | Task.objects.filter(
+                    user=user,
+                    id=int(search_param)
+                )
+
+        return queryset
 
 class task_create_view(CreateView):
     template_name = 'Task_create.html'

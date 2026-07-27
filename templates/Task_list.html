@@ -32,6 +32,7 @@
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
             box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         button:hover {
@@ -74,19 +75,54 @@
             margin-bottom: 20px;
         }
 
-        .container_btn_in form{
-            justify-content: space-between;
+        .container_btn_in form {
             display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .container_btn_in input {
-            width: 100%;
-            border-radius: 20px;
+            flex: 1;
+            border: 1px solid #c7d2fe;
+            border-radius: 999px;
+            padding: 10px 14px;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .container_btn_in input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
         .container_btn_in button {
-            margin-left: 30px;
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+        }
+
+        .container_btn_in button:hover,
+        .all_button:hover,
+        .logout-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.25);
+        }
+
+        .logout-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
         }
     </style>
 </head>
@@ -97,7 +133,7 @@
         <a href="/create_view/"><button class="all_button">Create Task</button></a>
         <form method="post" action="/logout/">
             {% csrf_token %}
-            <button type="submit">Logout</button>
+            <button type="submit" class="logout-btn">Logout</button>
         </form>
     </div>
     <div class="container_btn_in">
